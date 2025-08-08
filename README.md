@@ -38,7 +38,7 @@ The main API functions are declared in [`btree.h`](btree.h):
 
 ## Usage Example
 
-1. **Initialize the library** (optional error handler):
+1. **Initialize the library** (optional error handler, must be called before use):
 
     ```c
     InitDB(NULL);
@@ -54,13 +54,13 @@ The main API functions are declared in [`btree.h`](btree.h):
 3. **Insert a record**:
 
     ```c
-    InsertRecord(&db, record_data);
+    InsertRecord(&db, (char *)&record_data);
     ```
 
 4. **Search for a record**:
 
     ```c
-    if (GetRecord(&db, search_key)) {
+    if (GetRecord(&db, (char *)&record_data)) {
         // Record found
     }
     ```
@@ -68,10 +68,16 @@ The main API functions are declared in [`btree.h`](btree.h):
 5. **Delete a record**:
 
     ```c
-    RemoveRecord(&db, key_data);
+    RemoveRecord(&db, (char *)&record_data);
     ```
 
-6. **Close the database**:
+6. **Update a record**:
+
+    ```c
+    ReplaceRecord(&db, (char *)&record_data);
+    ```
+
+7. **Close the database**:
 
     ```c
     CloseDb(&db);
@@ -88,6 +94,7 @@ The main API functions are declared in [`btree.h`](btree.h):
 - The B-tree is designed for fixed-length records.
 - All file I/O is performed using POSIX system calls.
 - Error handling is customizable via `InitDB`.
+- See [wxcd_collection](https://github.com/andersjoern/wxcd_collection) which is using the library.
 
 ## License
 
